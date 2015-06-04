@@ -606,7 +606,7 @@
         <groupId>${project.groupId}</groupId>
         <artifactId>netty-tcnative</artifactId>
         <version>1.1.32.Fork1</version>
-        <classifier>${os.detected.classifier}</classifier>
+       <!-- <classifier>${os.detected.classifier}</classifier> -->
         <scope>compile</scope>
         <optional>true</optional>
       </dependency>
@@ -938,6 +938,7 @@
           </execution>
         </executions>
       </plugin>
+	  
       <plugin>
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>2.10</version>
@@ -955,6 +956,9 @@
               <failOnViolation>true</failOnViolation>
               <configLocation>io/netty/checkstyle.xml</configLocation>
               <includeTestSourceDirectory>true</includeTestSourceDirectory>
+			  <!--wurunzhou 添加 -->
+			  <skip>true</skip>
+			 
             </configuration>
           </execution>
         </executions>
@@ -966,6 +970,7 @@
           </dependency>
         </dependencies>
       </plugin>
+	  
       <!-- Download the npn-boot.jar in advance to add it to the boot classpath. -->
       <plugin>
         <artifactId>maven-dependency-plugin</artifactId>
@@ -1331,6 +1336,7 @@
                     <ignore />
                   </action>
                 </pluginExecution>
+				
                 <pluginExecution>
                   <pluginExecutionFilter>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -1344,6 +1350,8 @@
                     <ignore />
                   </action>
                 </pluginExecution>
+			
+				
                 <pluginExecution>
                   <pluginExecutionFilter>
                     <groupId>org.apache.maven.plugins</groupId>
