@@ -102,11 +102,17 @@ public class WebSocket08FrameEncoder extends MessageToMessageEncoder<WebSocketFr
         this.maskPayload = maskPayload;
     }
 
+    /**
+     * 将websocket frame 片段编码成满足websocket13协议的
+     * <br>
+     * 其执行过程是将msg 按照要求处理之后，变成ByteBuffere 然后放到List中。
+     */
     @Override
     protected void encode(ChannelHandlerContext ctx, WebSocketFrame msg, List<Object> out) throws Exception {
         final ByteBuf data = msg.content();
         byte[] mask;
 
+        // 判断msg 类型，如文本，二进制等等，其中要特别注意的是ContinuationWebSocketFrame
         byte opcode;
         if (msg instanceof TextWebSocketFrame) {
             opcode = OPCODE_TEXT;
@@ -124,19 +130,24 @@ public class WebSocket08FrameEncoder extends MessageToMessageEncoder<WebSocketFr
             throw new UnsupportedOperationException("Cannot encode frame of type: " + msg.getClass().getName());
         }
 
+        // frame 实际内容长度
         int length = data.readableBytes();
 
         if (logger.isDebugEnabled()) {
             logger.debug("Encoding WebSocket Frame opCode=" + opcode + " length=" + length);
         }
 
+        // b0 是第一个byte,如果不是Continuation,则FIN 至1
         int b0 = 0;
         if (msg.isFinalFragment()) {
             b0 |= 1 << 7;
         }
+        // 判断是不是用到协议扩展
         b0 |= msg.rsv() % 8 << 4;
+        // 添加opcode 来自WebsocketFrame
         b0 |= opcode % 128;
 
+        // ping 没有内容，或者内容不允许长度大于125
         if (opcode == OPCODE_PING && length > 125) {
             throw new TooLongFrameException("invalid payload for PING (payload length must be <= 125, was "
                     + length);
@@ -145,17 +156,23 @@ public class WebSocket08FrameEncoder extends MessageToMessageEncoder<WebSocketFr
         boolean release = true;
         ByteBuf buf = null;
         try {
+        	// 如果掩码处理，添加4个byte 的掩码
             int maskLength = maskPayload ? 4 : 0;
             if (length <= 125) {
+            	// 长度小于125 ,该处写入2个 byte---
+            	// 两个字节的头部（FIN+opcode#mask+loadLen）加四个字节的掩码
                 int size = 2 + maskLength;
+                // 如果有掩码或者是frame 真实内容长度小于1k，加上真实内容长度
                 if (maskPayload || length <= GATHERING_WRITE_TRESHOLD) {
                     size += length;
                 }
                 buf = ctx.alloc().buffer(size);
                 buf.writeByte(b0);
+                // b 是第二个byte,负责 mask +load Len
                 byte b = (byte) (maskPayload ? 0x80 | (byte) length : (byte) length);
                 buf.writeByte(b);
             } else if (length <= 0xFFFF) {
+            	// 长度小于2^16 ，该处写入4个byte---
                 int size = 4 + maskLength;
                 if (maskPayload || length <= GATHERING_WRITE_TRESHOLD) {
                     size += length;
@@ -166,6 +183,7 @@ public class WebSocket08FrameEncoder extends MessageToMessageEncoder<WebSocketFr
                 buf.writeByte(length >>> 8 & 0xFF);
                 buf.writeByte(length & 0xFF);
             } else {
+            	// 长度小于2^64 ，该处写入10个byte---
                 int size = 10 + maskLength;
                 if (maskPayload || length <= GATHERING_WRITE_TRESHOLD) {
                     size += length;
@@ -179,6 +197,7 @@ public class WebSocket08FrameEncoder extends MessageToMessageEncoder<WebSocketFr
             // Write payload
             if (maskPayload) {
                 int random = (int) (Math.random() * Integer.MAX_VALUE);
+                // 掩码四个byte ,写入
                 mask = ByteBuffer.allocate(4).putInt(random).array();
                 buf.writeBytes(mask);
 
@@ -211,6 +230,7 @@ public class WebSocket08FrameEncoder extends MessageToMessageEncoder<WebSocketFr
                 }
                 for (; i < end; i++) {
                     byte byteData = data.getByte(i);
+                    // 掩码处理之后，写入frame 真实内容
                     buf.writeByte(byteData ^ mask[counter++ % 4]);
                 }
                 out.add(buf);
