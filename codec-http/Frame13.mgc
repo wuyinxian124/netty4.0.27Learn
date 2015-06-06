@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ClassDiagram>
+    <Class
+        name="io.netty.handler.codec.http.websocketx.WebSocket13FrameDecoder"
+        x="147" y="355">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="io.netty.handler.codec.http.websocketx.WebSocket08FrameDecoder"/>
+    </Class>
+    <Class
+        name="io.netty.handler.codec.http.websocketx.WebSocket08FrameEncoder"
+        x="542" y="222">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class
+        name="io.netty.handler.codec.http.websocketx.WebSocket08FrameDecoder"
+        x="84" y="80">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class
+        name="io.netty.handler.codec.http.websocketx.WebSocket13FrameEncoder"
+        x="550" y="358">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="io.netty.handler.codec.http.websocketx.WebSocket08FrameEncoder"/>
+    </Class>
+    <Class
+        name="io.netty.handler.codec.http.websocketx.WebSocket08FrameDecoder.State"
+        x="262" y="74">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+</ClassDiagram>

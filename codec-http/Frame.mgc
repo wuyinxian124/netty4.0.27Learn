@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ClassDiagram>
+    <Class name="io.netty.buffer.ByteBufHolder" x="381" y="-147">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="io.netty.buffer.DefaultByteBufHolder" x="345" y="-33">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="io.netty.buffer.ByteBufHolder"/>
+    </Class>
+    <Class
+        name="io.netty.handler.codec.http.websocketx.PingWebSocketFrame"
+        x="326" y="345">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="io.netty.handler.codec.http.websocketx.WebSocketFrame"/>
+        <Communication destinationClassName="io.netty.handler.codec.http.websocketx.WebSocketFrame"/>
+    </Class>
+    <Class name="io.netty.handler.codec.http.websocketx.WebSocketFrame"
+        x="343" y="147">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="io.netty.buffer.DefaultByteBufHolder"/>
+    </Class>
+</ClassDiagram>
